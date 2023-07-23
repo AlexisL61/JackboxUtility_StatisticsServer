@@ -21,7 +21,7 @@ export async function saveStatInCollection (data: AbstractUserStat) {
 
     const existingData = await currentcollection.findOne({hash:data.hash});
     if(existingData){
-        await currentcollection.updateOne({hash:data.hash},data.toJson());
+        await currentcollection.updateOne({hash:data.hash},{"$set":data.toJson()});
     }else{
         await currentcollection.insertOne(data.toJson());
     }
