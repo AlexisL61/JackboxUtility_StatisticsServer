@@ -7,3 +7,6 @@ services:
       - "4000:80"
     volumes:
       - src:/usr/src/app
+
+volumes:
+  src:
