@@ -12,7 +12,9 @@ export default class AppOpenStat extends AbstractUserStat{
     toJson(): any {
         return {
             hash:this.hash,
-            date:Date.now()
+            date:Date.now(),
+            serverName:this.data.serverName,
+            serverURL:this.data.serverURL
         }
     }
     getCollectionName(): string {
