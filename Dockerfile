@@ -2,9 +2,9 @@ FROM node:10.13.0-alpine
 
 WORKDIR /usr/src/app
 
-COPY src/package.json .
+COPY src .
 
-RUN npm --prefix src install src
+RUN npm install
 
 ADD src /usr/src/app
 
