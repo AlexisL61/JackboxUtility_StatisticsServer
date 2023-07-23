@@ -1,6 +1,8 @@
 import * as mongoDB from "mongodb";
+import AbstractUserStat from "../model/AbstractUserStat";
 
 export const collections: { appOpenStats?: mongoDB.Collection } = {}
+export const db: {stats?: mongoDB.Db} = {}
 
 export async function connectToDatabase () {
     console.log("mongodb://"+process.env.MONGO_INITDB_ROOT_USERNAME+":"+process.env.MONGO_INITDB_ROOT_PASSWORD+"@mongo")
@@ -8,13 +10,21 @@ export async function connectToDatabase () {
     
     await client.connect();
     
-    const db: mongoDB.Db = client.db("STATS");
+    db.stats = client.db("STATS");
     
-    const gamesCollection: mongoDB.Collection = db.collection("appOpenStats");
-    
-    collections.appOpenStats = gamesCollection;
-    
-    console.log(`Successfully connected to database: ${db.databaseName} and collection: ${gamesCollection.collectionName}`);
+    console.log(`Successfully connected to database`);
+}
+
+export async function saveStatInCollection (data: AbstractUserStat) {
+    const currentDb = db.stats;
+    const currentcollection: mongoDB.Collection = currentDb.collection(data.getCollectionName());
+
+    const existingData = await currentcollection.findOne({hash:data.hash});
+    if(existingData){
+        await currentcollection.updateOne({hash:data.hash},data.toJson());
+    }else{
+        await currentcollection.insertOne(data.toJson());
+    }
 }
 
 export async function insertAppOpenStats (appOpenStats: any) {
