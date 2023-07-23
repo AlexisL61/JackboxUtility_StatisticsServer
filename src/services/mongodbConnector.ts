@@ -5,8 +5,7 @@ export const collections: { appOpenStats?: mongoDB.Collection } = {}
 export const db: {stats?: mongoDB.Db} = {}
 
 export async function connectToDatabase () {
-    console.log("mongodb://"+process.env.MONGO_INITDB_ROOT_USERNAME+":"+process.env.MONGO_INITDB_ROOT_PASSWORD+"@mongo")
-    const client: mongoDB.MongoClient = new mongoDB.MongoClient("mongodb://"+process.env.MONGO_INITDB_ROOT_USERNAME+":"+process.env.MONGO_INITDB_ROOT_PASSWORD+"@mongo");
+    const client: mongoDB.MongoClient = new mongoDB.MongoClient("mongodb://"+process.env.MONGO_INITDB_ROOT_USERNAME+":"+process.env.MONGO_INITDB_ROOT_PASSWORD+"@"+process.env.MONGO_NETWORK_NAME);
     
     await client.connect();
     
