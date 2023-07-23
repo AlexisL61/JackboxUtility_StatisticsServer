@@ -5,8 +5,3 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4000:80"
-    volumes:
-      - src:/usr/src/app
-
-volumes:
-  src:
