@@ -7,6 +7,7 @@ import UserStatController from '../controller/userStatController'
 const app = express()
 const port = 80
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 export async function startServer() {
 
