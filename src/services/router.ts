@@ -1,14 +1,18 @@
 import express from 'express'
+import bodyParser from 'body-parser';
 import {getDocumentsInCollection } from './mongodbConnector'
 import AppOpenStat from '../model/AppOpenStat'
+import UserStatController from '../controller/userStatController'
+
 const app = express()
 const port = 80
+app.use(bodyParser.urlencoded({ extended: true }));
 
 export async function startServer() {
 
-    app.get('/',async (req, res) => {
+    app.post('/',async (req, res) => {
         var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
-        var openStats = new AppOpenStat(ip)
+        var openStats = UserStatController.generateClass(ip, AppOpenStat, req.body);
         await openStats.save()
         res.send("OK")
     })

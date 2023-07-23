@@ -1,16 +1,26 @@
 import { hash256 } from "../services/hash";
 import { saveStatInCollection } from "../services/mongodbConnector";
 
-export default abstract class AbstractUserStat {
+export default class AbstractUserStat {
     hash:string;
+    data:any;
 
-    constructor(ip:string){
+    constructor(ip:string, data:any){
         this.hash = hash256(ip);
+        this.data = data;
     }
 
-    abstract toJson():any;
+    toJson():any{
+        return {};
+    };
 
-    abstract getCollectionName():string;
+    getCollectionName():string{
+        return "";
+    };
+
+    static availableFields():string[]{
+        return [];
+    };
 
     async save(){
         saveStatInCollection(this);
