@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAppOpenStats, insertAppOpenStats } from './mongodbConnector'
+import {getDocumentsInCollection } from './mongodbConnector'
 import AppOpenStat from '../model/AppOpenStat'
 const app = express()
 const port = 80
@@ -14,7 +14,7 @@ export async function startServer() {
     })
 
     app.get('/api/getData',async (req, res) => {
-        res.send(await getAppOpenStats())
+        res.send(await getDocumentsInCollection("appOpenStats"))
     });
 
     app.listen(port, () => {

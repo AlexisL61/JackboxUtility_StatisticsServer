@@ -27,14 +27,12 @@ export async function saveStatInCollection (data: AbstractUserStat) {
     }
 }
 
-export async function insertAppOpenStats (appOpenStats: any) {
-    const result = await collections.appOpenStats?.insertOne(appOpenStats);
-    console.log(`Successfully inserted document with _id: ${result?.insertedId}`);
-}
+export async function getDocumentsInCollection (collectionName: string) {
+    const currentDb = db.stats;
+    const currentcollection: mongoDB.Collection = currentDb.collection(collectionName);
 
-export async function getAppOpenStats () {
-    const cursor = collections.appOpenStats?.find({});
-    const result = await cursor?.toArray();
+    const cursor = currentcollection.find({});
+    const result = await cursor.toArray();
     console.log(`Successfully found ${result?.length} documents`);
     return result;
 }
