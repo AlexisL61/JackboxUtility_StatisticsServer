@@ -12,6 +12,7 @@ export async function startServer() {
 
     app.post('/',async (req, res) => {
         var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
+        console.log(req.body);
         var openStats = UserStatController.generateClass(ip, AppOpenStat, req.body);
         await openStats.save()
         res.send("OK")
