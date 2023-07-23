@@ -2,6 +2,7 @@
 const fetch = require("node-fetch")
 
 const serversFound = {}
+let usersFound = 0;
 
 async function buildInsight(){
     const response = await fetch("https://stats.jackboxutility.com/api/app_open");
@@ -16,6 +17,7 @@ async function buildInsight(){
     for (const data of arrayData){
         const date = data.date;
         if (date > dateMinusOneDay){
+            usersFound++;
             const serverName = data.serverName;
             const serverURL = data.serverURL;
             if (!serversFound[serverURL]){
@@ -30,7 +32,7 @@ async function buildInsight(){
         }
     }
 
-    let message = "# Users found in the last 24 hours\n\n";
+    let message = "# Users found in the last 24 hours\n\nTotal of **"+usersFound+"** users\n\n# Users for each server\n\n";
 
     for (const server of Object.values(serversFound)){
         message += `**${server.name}** - ${server.count} users\n`;
