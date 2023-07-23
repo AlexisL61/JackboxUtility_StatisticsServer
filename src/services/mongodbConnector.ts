@@ -3,8 +3,8 @@ import * as mongoDB from "mongodb";
 export const collections: { appOpenStats?: mongoDB.Collection } = {}
 
 export async function connectToDatabase () {
-    console.log("mongodb://"+process.env.MONGO_INITDB_ROOT_USERNAME+":"+process.env.MONGO_INITDB_ROOT_USERNAME+"@mongo")
-    const client: mongoDB.MongoClient = new mongoDB.MongoClient("mongodb://"+process.env.MONGO_INITDB_ROOT_USERNAME+":"+process.env.MONGO_INITDB_ROOT_USERNAME+"@mongo");
+    console.log("mongodb://"+process.env.MONGO_INITDB_ROOT_USERNAME+":"+process.env.MONGO_INITDB_ROOT_PASSWORD+"@mongo")
+    const client: mongoDB.MongoClient = new mongoDB.MongoClient("mongodb://"+process.env.MONGO_INITDB_ROOT_PASSWORD+":"+process.env.MONGO_INITDB_ROOT_USERNAME+"@mongo");
     
     await client.connect();
     
