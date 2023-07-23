@@ -1,11 +1,9 @@
-import express from 'express'
-const app = express()
-const port = 80
+import { connectToDatabase } from "./services/mongodbConnector";
+import { startServer } from "./services/router";
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+async function init(){
+    await connectToDatabase();
+    startServer();
+}
 
-app.listen(port, () => {
-  console.log(`JackboxUtility statistics server available on port ${port}`)
-})
+init();
