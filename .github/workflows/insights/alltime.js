@@ -32,7 +32,7 @@
          } 
      } 
   
-     let message = "# Users found in the last 24 hours\n\nTotal of **"+usersFound+"** users\n\n# Users for each server\n\n"; 
+     let message = "# Users found since the beginning\n\nTotal of **"+usersFound+"** users\n\n# Users for each server\n\n"; 
   
      for (const server of Object.values(serversFound)){ 
          message += `**${server.name}** - ${server.count} users\n`; 
