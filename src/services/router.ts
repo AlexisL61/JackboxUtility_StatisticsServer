@@ -1,9 +1,10 @@
 import express from 'express'
 import bodyParser from 'body-parser';
-import {getDocumentsInCollection } from './mongodbConnector'
+import {getDocumentsInCollection, getHistoryDocumentsInCollection } from './mongodbConnector'
 import AppOpenStat from '../model/AppOpenStat'
 import UserStatController from '../controller/userStatController'
 import { hidePrivateDataArray } from './hider';
+import { buildCSVFromAppOpenStatHistoryData } from './csvBuilder';
 
 const app = express()
 const port = 80
@@ -26,6 +27,13 @@ export async function startServer() {
 
     app.get('/api/app_open',async (req, res) => {
         res.send(hidePrivateDataArray(await getDocumentsInCollection("appOpenStats")))
+    });
+
+    app.get('/api/app_open/csv/:type',async (req, res) => {
+        var data = await getHistoryDocumentsInCollection("appOpenStatHistory", req.params.type);
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', 'attachment; filename=\"appOpenStats.csv\"');
+        res.send(buildCSVFromAppOpenStatHistoryData(data));
     });
 
     app.listen(port, () => {

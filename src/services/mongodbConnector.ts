@@ -1,5 +1,6 @@
 import * as mongoDB from "mongodb";
 import AbstractUserStat from "../model/AbstractUserStat";
+import AbstractStatHistory from "../model/AbstractStatHistory";
 
 export const collections: { appOpenStats?: mongoDB.Collection } = {}
 export const db: {stats?: mongoDB.Db} = {}
@@ -26,11 +27,27 @@ export async function saveStatInCollection (data: AbstractUserStat) {
     }
 }
 
+export async function saveHistoryStatInCollection (data: AbstractStatHistory) {
+    const currentDb = db.stats;
+    const currentcollection: mongoDB.Collection = currentDb.collection(data.getCollectionName());
+    await currentcollection.insertOne(data.toJson());
+}
+
 export async function getDocumentsInCollection (collectionName: string) {
     const currentDb = db.stats;
     const currentcollection: mongoDB.Collection = currentDb.collection(collectionName);
 
     const cursor = currentcollection.find({});
+    const result = await cursor.toArray();
+    console.log(`Successfully found ${result?.length} documents`);
+    return result;
+}
+
+export async function getHistoryDocumentsInCollection(collectionName: string, type: string) {
+    const currentDb = db.stats;
+    const currentcollection: mongoDB.Collection = currentDb.collection(collectionName);
+
+    const cursor = currentcollection.find<{serverData:Array<{serverName: string; serverUrl: string; users: number}>, date:Date, type:"daily"|"weekly"|"monthly" }>({type: type});
     const result = await cursor.toArray();
     console.log(`Successfully found ${result?.length} documents`);
     return result;
