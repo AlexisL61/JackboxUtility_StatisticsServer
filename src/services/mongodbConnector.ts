@@ -47,7 +47,7 @@ export async function getHistoryDocumentsInCollection(collectionName: string, ty
     const currentDb = db.stats;
     const currentcollection: mongoDB.Collection = currentDb.collection(collectionName);
 
-    const cursor = currentcollection.find<{serverData:Array<{serverName: string; serverUrl: string; users: number}>, date:Date, type:"daily"|"weekly"|"monthly" }>({type: type});
+    const cursor = currentcollection.find<{serverData:Array<{serverName: string; serverUrl: string; users: number}>, date:Date, type:"daily"|"weekly"|"monthly" }>({type: type, date:{$exists:true}}).sort({date:1});
     const result = await cursor.toArray();
     console.log(`Successfully found ${result?.length} documents`);
     return result;
