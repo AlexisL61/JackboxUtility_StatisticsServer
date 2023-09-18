@@ -11,14 +11,14 @@ export function buildCSVFromAppOpenStatHistoryData(stats:appOpenStatHistoryData[
 }
 
 function findAllServers(stats:appOpenStatHistoryData[]):{serverName:string, serverUrl:string}[]{
-    const servers = new Set<{serverName:string, serverUrl:string}>();
+    const servers = new Array<{serverName:string, serverUrl:string}>();
     stats.forEach((stat)=>{
         stat.serverData.forEach((server)=>{
-            if (!servers.has(server))
-                servers.add(server);
+            if (!servers.find(s=>server.serverUrl === s.serverUrl))
+                servers.push(server);
         })
     })
-    return Array.from(servers);
+    return servers;
 }
 
 function buildCSVHeader(servers: { serverName: string; serverUrl: string; }[]) {
