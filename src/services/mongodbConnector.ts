@@ -33,11 +33,11 @@ export async function saveHistoryStatInCollection (data: AbstractStatHistory) {
     await currentcollection.insertOne(data.toJson());
 }
 
-export async function getDocumentsInCollection (collectionName: string) {
+export async function getDocumentsInCollection (collectionName: string, parameters?: any) {
     const currentDb = db.stats;
     const currentcollection: mongoDB.Collection = currentDb.collection(collectionName);
 
-    const cursor = currentcollection.find({});
+    const cursor = currentcollection.find(parameters!=null?parameters:{});
     const result = await cursor.toArray();
     console.log(`Successfully found ${result?.length} documents`);
     return result;
