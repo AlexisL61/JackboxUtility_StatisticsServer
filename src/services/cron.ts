@@ -8,7 +8,6 @@ export function startCron() {
         console.log('Running cron job');
         doCronJob();
     });
-    doCronJob();
 }
 
 async function doCronJob() {
@@ -31,9 +30,7 @@ async function retrievingOpenStatsData() {
 
 async function saveOpenStatsData(serversFound) {
     const data = [];
-    console.log(serversFound);
     for (const server in serversFound) {
-        console.log(serversFound[server], server);
         data.push(serversFound[server]);
     }
     const d = new Date();
