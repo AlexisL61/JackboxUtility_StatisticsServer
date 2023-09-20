@@ -8,6 +8,7 @@ export function startCron() {
         console.log('Running cron job');
         doCronJob();
     });
+    doCronJob();
 }
 
 async function doCronJob() {
