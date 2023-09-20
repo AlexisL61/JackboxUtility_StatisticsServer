@@ -31,10 +31,12 @@ async function retrievingOpenStatsData() {
 
 async function saveOpenStatsData(serversFound) {
     const data = [];
+    console.log(serversFound);
     for (const server in serversFound) {
+        console.log(serversFound[server], server);
         data.push(serversFound[server]);
     }
     const d = new Date();
-    const currentDateAsString = d.getFullYear()+ "-" + ("0"+(d.getMonth()+1)).slice(-2) + ("0" + (d.getDate())).slice(-2);
+    const currentDateAsString = d.getFullYear()+ "-" + ("0"+(d.getMonth()+1)).slice(-2) +"-"+ ("0" + (d.getDate())).slice(-2);
     await saveHistoryStatInCollection(new AppOpenStatHistory(currentDateAsString, data, "daily"));
 }
