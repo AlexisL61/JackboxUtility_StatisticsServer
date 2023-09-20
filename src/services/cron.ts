@@ -33,5 +33,7 @@ async function saveOpenStatsData(serversFound) {
     for (const server in serversFound) {
         data.push(serversFound[server]);
     }
-    await saveHistoryStatInCollection(new AppOpenStatHistory(new Date(), data, "daily"));
+    const currentDate = new Date();
+    const currentDateAsString = d.getFullYear()+ "-" + ("0"+(d.getMonth()+1)).slice(-2) + ("0" + (d.getDate())).slice(-2);
+    await saveHistoryStatInCollection(new AppOpenStatHistory(currentDateAsString, data, "daily"));
 }
