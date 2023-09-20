@@ -21,10 +21,10 @@ async function retrievingOpenStatsData() {
     const serversFound = {};
     for (let i = 0; i < data.length; i++) {
         let server = data[i];
-        if (!serversFound[server.serverUrl]) {
-            serversFound[server.serverUrl] = { serverName: server.serverName, serverUrl:server.serverUrl, users: 0 };
+        if (!serversFound[server.serverURL]) {
+            serversFound[server.serverURL] = { serverName: server.serverName, serverUrl:server.serverURL, users: 0 };
         }
-        serversFound[server.serverUrl].users++;
+        serversFound[server.serverURL].users++;
     }
     return serversFound;
 }
