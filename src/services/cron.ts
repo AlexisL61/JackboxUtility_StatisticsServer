@@ -19,7 +19,7 @@ async function retrievingOpenStatsData() {
     let data = await getDocumentsInCollection("appOpenStats", { "date": { "$gte": Date.now()-86400000 } });
     const serversFound = {};
     for (let i = 0; i < data.length; i++) {
-        const server = data[i];
+        let server = data[i];
         if (!serversFound[server.serverUrl]) {
             serversFound[server.serverUrl] = { serverName: server.serverName, serverUrl:server.serverUrl, users: 0 };
         }
