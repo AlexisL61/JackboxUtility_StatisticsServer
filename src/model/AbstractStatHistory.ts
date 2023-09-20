@@ -2,10 +2,10 @@ import { saveHistoryStatInCollection } from "../services/mongodbConnector";
 
 
 export default class AbstractStatHistory {
-    date:Date;
+    date:string;
     type:"daily"|"weekly"|"monthly"
 
-    constructor(date:Date, type:"daily"|"weekly"|"monthly" ){
+    constructor(date:string, type:"daily"|"weekly"|"monthly" ){
         this.date = date;
         this.type = type;
     }
