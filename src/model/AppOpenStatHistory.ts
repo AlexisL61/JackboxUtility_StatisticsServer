@@ -4,7 +4,7 @@ import AbstractStatHistory from "./AbstractStatHistory";
 export default class AppOpenStatHistory extends AbstractStatHistory {
     serverData:Array<{serverName:String, serverUrl:String, users:number}>;
 
-    constructor(date:Date, serverData:Array<{serverName:String, serverUrl:String, users:number}>, type:"daily"|"weekly"|"monthly" ){
+    constructor(date:string, serverData:Array<{serverName:String, serverUrl:String, users:number}>, type:"daily"|"weekly"|"monthly" ){
         super(date, type);
         this.serverData = serverData;
     }
